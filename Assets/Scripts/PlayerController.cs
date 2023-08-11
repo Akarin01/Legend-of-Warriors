@@ -58,14 +58,19 @@ public class PlayerController : MonoBehaviour
         // 按住Walk键进入Walk状态
         if (inputControl.Gameplay.Walk.IsPressed())
         {
-            rb.velocity = new Vector2(inputDirection.x * walkSpeed, rb.velocity.y);
+            SetVelocityX(walkSpeed);
         }
         else
         {
-            rb.velocity = new Vector2(inputDirection.x * runSpeed, rb.velocity.y);
+            SetVelocityX(runSpeed);
         }
 
         Flip();
+    }
+
+    private void SetVelocityX(float speed)
+    {
+        rb.velocity = new Vector2(inputDirection.x * speed, rb.velocity.y);
     }
 
     private void Flip()
