@@ -53,6 +53,12 @@ public class PlayerController : MonoBehaviour
         GetInput();
     }
 
+    // test
+    // private void OnTriggerStay2D(Collider2D other)
+    // {
+    //     Debug.Log(other.name);
+    // }
+
     private void Move()
     {
         // 按住Walk键进入Walk状态
