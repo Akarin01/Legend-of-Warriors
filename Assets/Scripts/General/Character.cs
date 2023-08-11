@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Character : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class Character : MonoBehaviour
     public float invulnerableTime;
     private float invulnerableCount;
     public bool isInvulnerable;
+
+    public UnityEvent<Transform> onHurted;
+    public UnityEvent onDead;
 
     private void Start()
     {
@@ -42,12 +46,13 @@ public class Character : MonoBehaviour
         {
             currentHealth -= attaker.damage;
             TiggerInvulnerable();
+            onHurted?.Invoke(attaker.transform);
         }
         // 死亡
         else
         {
             currentHealth = 0;
-            // 处理死亡
+            onDead?.Invoke();
         }
 
     }

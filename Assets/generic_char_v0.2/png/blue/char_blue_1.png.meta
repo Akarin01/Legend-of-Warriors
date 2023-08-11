@@ -908,7 +908,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: char_blue_1_38
+      name: Hurt-0
       rect:
         serializedVersion: 2
         x: 0
@@ -929,7 +929,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: char_blue_1_39
+      name: Hurt-1
       rect:
         serializedVersion: 2
         x: 56
@@ -950,7 +950,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: char_blue_1_40
+      name: Hurt-2
       rect:
         serializedVersion: 2
         x: 112
@@ -971,7 +971,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: char_blue_1_41
+      name: Hurt-3
       rect:
         serializedVersion: 2
         x: 168
@@ -992,7 +992,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: char_blue_1_42
+      name: Dead-0
       rect:
         serializedVersion: 2
         x: 0
@@ -1013,7 +1013,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: char_blue_1_43
+      name: Dead-1
       rect:
         serializedVersion: 2
         x: 56
@@ -1034,7 +1034,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: char_blue_1_44
+      name: Dead-2
       rect:
         serializedVersion: 2
         x: 112
@@ -1055,7 +1055,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: char_blue_1_45
+      name: Dead-3
       rect:
         serializedVersion: 2
         x: 168
@@ -1076,7 +1076,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: char_blue_1_46
+      name: Dead-4
       rect:
         serializedVersion: 2
         x: 224
@@ -1097,7 +1097,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: char_blue_1_47
+      name: Dead-5
       rect:
         serializedVersion: 2
         x: 280
@@ -1118,7 +1118,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: char_blue_1_48
+      name: Dead-6
       rect:
         serializedVersion: 2
         x: 336
@@ -1139,7 +1139,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: char_blue_1_49
+      name: Dead-7
       rect:
         serializedVersion: 2
         x: 392
@@ -1160,7 +1160,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: char_blue_1_50
+      name: Dead-8
       rect:
         serializedVersion: 2
         x: 0
@@ -1181,7 +1181,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: char_blue_1_51
+      name: Dead-9
       rect:
         serializedVersion: 2
         x: 56
@@ -1202,7 +1202,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: char_blue_1_52
+      name: Dead-10
       rect:
         serializedVersion: 2
         x: 112
@@ -1223,7 +1223,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: char_blue_1_53
+      name: Dead-11
       rect:
         serializedVersion: 2
         x: 168
@@ -1548,6 +1548,22 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      Dead-0: 1011910573
+      Dead-1: 888486576
+      Dead-10: -1348546189
+      Dead-11: 1074602084
+      Dead-2: -1106378527
+      Dead-3: 877395734
+      Dead-4: -2100401366
+      Dead-5: 920068857
+      Dead-6: 998815417
+      Dead-7: 262362981
+      Dead-8: -2139102471
+      Dead-9: -124992981
+      Hurt-0: 1883992062
+      Hurt-1: 859958088
+      Hurt-2: -448395384
+      Hurt-3: 1883399102
       Idle-0: -881127560
       Idle-1: -737451877
       Idle-2: 919708988
@@ -1582,22 +1598,6 @@ TextureImporter:
       char_blue_1_11: -777619317
       char_blue_1_12: -1429724273
       char_blue_1_13: 1871824924
-      char_blue_1_38: 859958088
-      char_blue_1_39: -1027390574
-      char_blue_1_40: 1883399102
-      char_blue_1_41: 1011910573
-      char_blue_1_42: 888486576
-      char_blue_1_43: -1106378527
-      char_blue_1_44: 877395734
-      char_blue_1_45: -2100401366
-      char_blue_1_46: 920068857
-      char_blue_1_47: 998815417
-      char_blue_1_48: 262362981
-      char_blue_1_49: 1560724481
-      char_blue_1_50: -124992981
-      char_blue_1_51: -1348546189
-      char_blue_1_52: 1074602084
-      char_blue_1_53: -224716221
       char_blue_1_54: 2087707788
       char_blue_1_55: -432151110
       char_blue_1_56: 1977652946

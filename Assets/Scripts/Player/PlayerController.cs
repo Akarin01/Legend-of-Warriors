@@ -19,6 +19,11 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 originScale;
 
+    public float hurtForce = 5f;
+    public bool isHurt;
+
+    public bool isDead;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -45,7 +50,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move();
+        if (!isHurt)
+            Move();
     }
 
     private void Update()
@@ -72,6 +78,20 @@ public class PlayerController : MonoBehaviour
         }
 
         Flip();
+    }
+    /// <summary>
+    /// 死亡
+    /// </summary>
+    public void Die()
+    {
+        isDead = true;
+        // 关闭Gameplay输入
+        DisableGameplayInput();
+    }
+
+    private void DisableGameplayInput()
+    {
+        inputControl.Gameplay.Disable();
     }
 
     private void SetVelocityX(float speed)
@@ -114,5 +134,19 @@ public class PlayerController : MonoBehaviour
     private void DisableInputControl()
     {
         inputControl.Disable();
+    }
+
+    /// <summary>
+    /// 受伤
+    /// </summary>
+    /// <param name="attaker"></param>
+    public void GetHurt(Transform attaker)
+    {
+        isHurt = true;
+        // 将速度归零
+        rb.velocity = Vector2.zero;
+        // 将角色推动
+        Vector2 dir = new Vector2(transform.position.x - attaker.position.x, 0).normalized;
+        rb.AddForce(dir * hurtForce, ForceMode2D.Impulse);
     }
 }
