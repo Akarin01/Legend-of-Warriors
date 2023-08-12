@@ -218,7 +218,7 @@ TextureImporter:
       name: Idle-5
       rect:
         serializedVersion: 2
-        x: 279
+        x: 280
         y: 560
         width: 56
         height: 56
@@ -236,7 +236,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: char_blue_1_6
+      name: Attack_1_0
       rect:
         serializedVersion: 2
         x: 0
@@ -257,7 +257,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: char_blue_1_7
+      name: Attack_1_1
       rect:
         serializedVersion: 2
         x: 56
@@ -278,7 +278,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: char_blue_1_8
+      name: Attack_1_2
       rect:
         serializedVersion: 2
         x: 112
@@ -299,7 +299,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: char_blue_1_9
+      name: Attack_1_3
       rect:
         serializedVersion: 2
         x: 168
@@ -320,7 +320,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: char_blue_1_10
+      name: Attack_1_4
       rect:
         serializedVersion: 2
         x: 224
@@ -341,7 +341,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: char_blue_1_11
+      name: Attack_1_5
       rect:
         serializedVersion: 2
         x: 280
@@ -362,7 +362,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: char_blue_1_12
+      name: Attack_2_0
       rect:
         serializedVersion: 2
         x: 336
@@ -383,7 +383,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: char_blue_1_13
+      name: Attack_2_1
       rect:
         serializedVersion: 2
         x: 392
@@ -1548,6 +1548,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      Attack_1_0: -1321044824
+      Attack_1_1: 317751074
+      Attack_1_2: -1716586741
+      Attack_1_3: 1454598278
+      Attack_1_4: -2003564558
+      Attack_1_5: 643127834
+      Attack_2_0: -777619317
+      Attack_2_1: -1429724273
       Dead-0: 1011910573
       Dead-1: 888486576
       Dead-10: -1348546189
@@ -1594,17 +1602,12 @@ TextureImporter:
       Run-5: 1831511598
       Run-6: -1197191707
       Run-7: 1557463207
-      char_blue_1_10: 643127834
-      char_blue_1_11: -777619317
-      char_blue_1_12: -1429724273
-      char_blue_1_13: 1871824924
       char_blue_1_54: 2087707788
       char_blue_1_55: -432151110
       char_blue_1_56: 1977652946
       char_blue_1_57: -19445474
       char_blue_1_58: 1315658792
       char_blue_1_59: -1321044824
-      char_blue_1_6: 1185231647
       char_blue_1_60: 1633422182
       char_blue_1_61: -1529884408
       char_blue_1_62: -1643434092
@@ -1613,9 +1616,6 @@ TextureImporter:
       char_blue_1_65: -34273859
       char_blue_1_66: -688560027
       char_blue_1_67: 317751074
-      char_blue_1_7: -1716586741
-      char_blue_1_8: 1454598278
-      char_blue_1_9: -881127560
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -11,6 +11,8 @@ public class PlayerAnimation : MonoBehaviour
     private const string isInvulnerableParam = "isInvulnerable";
     private const string isDeadParam = "isDead";
     private const string isHurtParam = "isHurt";
+    private const string attackParam = "attack";
+    private const string isAttackParam = "isAttack";
 
     private Animator animator;
     private Rigidbody2D rb;
@@ -40,5 +42,11 @@ public class PlayerAnimation : MonoBehaviour
         animator.SetBool(isInvulnerableParam, character.isInvulnerable);
         animator.SetBool(isDeadParam, player.isDead);
         animator.SetBool(isHurtParam, player.isHurt);
+        animator.SetBool(isAttackParam, player.isAttack);
+    }
+
+    public void TriggerAttackAnimation()
+    {
+        animator.SetTrigger(attackParam);
     }
 }

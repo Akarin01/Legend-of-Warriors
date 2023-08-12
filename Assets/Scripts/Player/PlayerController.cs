@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     private PlayerInputControl inputControl;
     private Rigidbody2D rb;
     private PhysicsCheck physicsCheck;
+    private PlayerAnimation playerAnimation;
 
     public Vector2 inputDirection;
 
@@ -20,18 +21,23 @@ public class PlayerController : MonoBehaviour
     private Vector3 originScale;
 
     public float hurtForce = 5f;
-    public bool isHurt;
 
+    [Header("状态")]
+    public bool isHurt;
     public bool isDead;
+    public bool isAttack;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         inputControl = new PlayerInputControl();
         physicsCheck = GetComponent<PhysicsCheck>();
+        playerAnimation = GetComponent<PlayerAnimation>();
 
         inputControl.Gameplay.Jump.started += Jump;
+        inputControl.Gameplay.Attack.started += PlayerAttack;
     }
+
 
     private void Start()
     {
@@ -121,6 +127,13 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(jumpForce * Vector2.up, ForceMode2D.Impulse);
     }
 
+
+    private void PlayerAttack(InputAction.CallbackContext context)
+    {
+        isAttack = true;
+        playerAnimation.TriggerAttackAnimation();
+    }
+
     private void GetInput()
     {
         inputDirection = inputControl.Gameplay.Move.ReadValue<Vector2>();
@@ -136,10 +149,6 @@ public class PlayerController : MonoBehaviour
         inputControl.Disable();
     }
 
-    /// <summary>
-    /// 受伤
-    /// </summary>
-    /// <param name="attaker"></param>
     public void GetHurt(Transform attaker)
     {
         isHurt = true;
