@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     [Header("基本参数")]
     public float runSpeed = 5f;
     public float walkSpeed = 2.5f;
+    public float attackSpeed = 1f;
     public float jumpForce = 16f;
 
     private Vector3 originScale;
@@ -77,6 +78,11 @@ public class PlayerController : MonoBehaviour
         if (inputControl.Gameplay.Walk.IsPressed())
         {
             SetVelocityX(walkSpeed);
+        }
+        if (isAttack)
+        {
+            int facingDir = transform.localScale.x > 0 ? 1 : -1;
+            rb.velocity = new Vector2(facingDir * attackSpeed, rb.velocity.y);
         }
         else
         {
