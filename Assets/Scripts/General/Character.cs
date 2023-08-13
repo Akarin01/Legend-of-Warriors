@@ -24,13 +24,18 @@ public class Character : MonoBehaviour
 
     private void Update()
     {
+        CountDownInvincibleTime();
+    }
+
+    private void CountDownInvincibleTime()
+    {
         // 无敌时间倒计时
         if (isInvulnerable)
         {
             invulnerableCount -= Time.deltaTime;
 
             // 无敌时间结束
-            if (invulnerableCount <= 0)
+            if (invulnerableCount <= 0f)
             {
                 isInvulnerable = false;
             }

@@ -18,10 +18,10 @@ public class PlayerController : MonoBehaviour
     public float walkSpeed = 2.5f;
     public float attackSpeed = 1f;
     public float jumpForce = 16f;
+    public float hurtForce = 5f;
 
     private Vector3 originScale;
 
-    public float hurtForce = 5f;
 
     [Header("状态")]
     public bool isHurt;
@@ -57,8 +57,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!isHurt)
-            Move();
+        Move();
     }
 
     private void Update()
@@ -72,18 +71,27 @@ public class PlayerController : MonoBehaviour
     //     Debug.Log(other.name);
     // }
 
+    /// <summary>
+    /// 处理各状态下的人物移动
+    /// </summary>
     private void Move()
     {
-        // 按住Walk键进入Walk状态
-        if (inputControl.Gameplay.Walk.IsPressed())
-        {
-            SetVelocityX(walkSpeed);
-        }
+        // 受击状态
+        if (isHurt)
+            return;
+
+        // 攻击状态
         if (isAttack)
         {
             int facingDir = transform.localScale.x > 0 ? 1 : -1;
             rb.velocity = new Vector2(facingDir * attackSpeed, rb.velocity.y);
         }
+        // 行走状态
+        else if (inputControl.Gameplay.Walk.IsPressed() && physicsCheck.IsGround)
+        {
+            SetVelocityX(walkSpeed);
+        }
+        // 其他状态
         else
         {
             SetVelocityX(runSpeed);
@@ -91,6 +99,26 @@ public class PlayerController : MonoBehaviour
 
         Flip();
     }
+
+    private void Flip()
+    {
+        if (inputDirection.x == 0)
+            return;
+
+        int facingDir = inputDirection.x > 0 ? 1 : -1;
+        SetFacingDirection(facingDir);
+
+        // if (inputDirection.x == 0)
+        //     return;
+
+        // sr.flipX = inputDirection.x < 0;
+    }
+
+    private void SetFacingDirection(int facingDir)
+    {
+        transform.localScale = new Vector3(originScale.x * facingDir, originScale.y, originScale.z);
+    }
+
     /// <summary>
     /// 死亡
     /// </summary>
@@ -99,6 +127,19 @@ public class PlayerController : MonoBehaviour
         isDead = true;
         // 关闭Gameplay输入
         DisableGameplayInput();
+    }
+
+    public void GetHurt(Transform attacker)
+    {
+        isHurt = true;
+        // 将速度归零
+        rb.velocity = Vector2.zero;
+        // 设置人物朝向
+        int facingDir = attacker.position.x - transform.position.x > 0f ? 1 : -1;
+        SetFacingDirection(facingDir);
+        // 将角色推动
+        Vector2 dir = new Vector2(transform.position.x - attacker.position.x, 0).normalized;
+        rb.AddForce(dir * hurtForce, ForceMode2D.Impulse);
     }
 
     private void DisableGameplayInput()
@@ -111,19 +152,6 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector2(inputDirection.x * speed, rb.velocity.y);
     }
 
-    private void Flip()
-    {
-        if (inputDirection.x == 0)
-            return;
-
-        int facingDir = inputDirection.x > 0 ? 1 : -1;
-        transform.localScale = new Vector3(originScale.x * facingDir, originScale.y, originScale.z);
-
-        // if (inputDirection.x == 0)
-        //     return;
-
-        // sr.flipX = inputDirection.x < 0;
-    }
 
     private void Jump(InputAction.CallbackContext context)
     {
@@ -155,13 +183,4 @@ public class PlayerController : MonoBehaviour
         inputControl.Disable();
     }
 
-    public void GetHurt(Transform attaker)
-    {
-        isHurt = true;
-        // 将速度归零
-        rb.velocity = Vector2.zero;
-        // 将角色推动
-        Vector2 dir = new Vector2(transform.position.x - attaker.position.x, 0).normalized;
-        rb.AddForce(dir * hurtForce, ForceMode2D.Impulse);
-    }
 }

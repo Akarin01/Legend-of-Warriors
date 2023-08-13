@@ -11,7 +11,13 @@ public class PhysicsCheck : MonoBehaviour
     private bool isGround;
 
     public bool IsGround => isGround;
+
     void Update()
+    {
+        CheckGround();
+    }
+
+    private void CheckGround()
     {
         int facingDir = transform.localScale.x > 0 ? 1 : -1;
 
@@ -19,6 +25,11 @@ public class PhysicsCheck : MonoBehaviour
     }
 
     private void OnDrawGizmosSelected()
+    {
+        DisplayGroundDetection();
+    }
+
+    private void DisplayGroundDetection()
     {
         int facingDir = transform.localScale.x > 0 ? 1 : -1;
 
