@@ -87,7 +87,7 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(facingDir * attackSpeed, rb.velocity.y);
         }
         // 行走状态
-        else if (inputControl.Gameplay.Walk.IsPressed() && physicsCheck.IsGround)
+        else if (inputControl.Gameplay.Walk.IsPressed() && physicsCheck.isGround)
         {
             SetVelocityX(walkSpeed);
         }
@@ -155,7 +155,7 @@ public class PlayerController : MonoBehaviour
 
     private void Jump(InputAction.CallbackContext context)
     {
-        if (!physicsCheck.IsGround)
+        if (!physicsCheck.isGround)
             return;
 
         rb.AddForce(jumpForce * Vector2.up, ForceMode2D.Impulse);

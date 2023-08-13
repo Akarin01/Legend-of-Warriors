@@ -38,7 +38,7 @@ public class PlayerAnimation : MonoBehaviour
     {
         animator.SetFloat(speedXParam, Mathf.Abs(rb.velocity.x));
         animator.SetFloat(velocityYParam, rb.velocity.y);
-        animator.SetBool(isGroundParam, physicsCheck.IsGround);
+        animator.SetBool(isGroundParam, physicsCheck.isGround);
         animator.SetBool(isInvulnerableParam, character.isInvulnerable);
         animator.SetBool(isDeadParam, player.isDead);
         animator.SetBool(isHurtParam, player.isHurt);
