@@ -66,8 +66,8 @@ public class PhysicsCheck : MonoBehaviour
 
         Gizmos.DrawWireSphere(new Vector2(transform.position.x + bottomOffset.x * facingDir, transform.position.y + bottomOffset.y), checkRadius);
 
-        Gizmos.DrawWireSphere(new Vector2(transform.position.x + leftOffset.x * facingDir, transform.position.y + leftOffset.y), checkRadius);
+        Gizmos.DrawWireSphere(new Vector2(transform.position.x + leftOffset.x, transform.position.y + leftOffset.y), checkRadius);
 
-        Gizmos.DrawWireSphere(new Vector2(transform.position.x + rightOffset.x * facingDir, transform.position.y + rightOffset.y), checkRadius);
+        Gizmos.DrawWireSphere(new Vector2(transform.position.x + rightOffset.x, transform.position.y + rightOffset.y), checkRadius);
     }
 }
