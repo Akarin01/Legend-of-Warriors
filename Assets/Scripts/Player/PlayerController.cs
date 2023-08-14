@@ -164,6 +164,9 @@ public class PlayerController : MonoBehaviour
 
     private void PlayerAttack(InputAction.CallbackContext context)
     {
+        if (isHurt)
+            return;
+
         isAttack = true;
         playerAnimation.TriggerAttackAnimation();
     }
