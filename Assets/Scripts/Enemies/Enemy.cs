@@ -21,7 +21,6 @@ public class Enemy : MonoBehaviour
     private WaitForSeconds recoverFromHurt;
 
     [Header("状态")]
-    public bool isWalk;
     public bool isChase;
     public bool isWait;
     public bool isHurt;
@@ -45,8 +44,6 @@ public class Enemy : MonoBehaviour
         // 默认向左
         facingDir = originScale.x > 0 ? -1 : 1;
 
-        isWalk = true;
-        animator.SetBool("isWalk", true);
         waitCounter = waitTime;
 
         recoverFromHurt = new WaitForSeconds(recoverFromHurtTime);
@@ -54,19 +51,17 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        CheckFacingDirection();
+        ChangeFacingDirection();
     }
 
-    private void CheckFacingDirection()
+    private void ChangeFacingDirection()
     {
         // 撞墙
         if (physicsCheck.isWall)
         {
             // 等待后转身
             isWait = true;
-            // 进入Idle状态
-            isWalk = false;
-            animator.SetBool("isWalk", false);
+            animator.SetBool("isWait", true);
         }
 
         CountDownWaitTime();
@@ -85,11 +80,19 @@ public class Enemy : MonoBehaviour
                 waitCounter = waitTime;
                 // 从等待状态切换回walk状态
                 isWait = false;
-                isWalk = true;
-                animator.SetBool("isWalk", true);
+                animator.SetBool("isWait", false);
                 // 转身
                 facingDir = -facingDir;
                 Flip();
+            }
+
+            // 在wait状态受伤
+            if (isHurt)
+            {
+                waitCounter = waitTime;
+                // 从等待状态切换回walk状态
+                isWait = false;
+                animator.SetBool("isWait", false);
             }
         }
 
@@ -108,13 +111,13 @@ public class Enemy : MonoBehaviour
         {
             SetVelocityX(chaseSpeed);
         }
-        else if (isWalk)
-        {
-            SetVelocityX(walkSpeed);
-        }
         else if (isWait)
         {
             SetVelocityX(0);
+        }
+        else
+        {
+            SetVelocityX(walkSpeed);
         }
 
         Flip();
@@ -135,22 +138,26 @@ public class Enemy : MonoBehaviour
         isHurt = true;
         animator.SetTrigger("hurt");
 
+        // 计算击退方向
+        Vector2 dir = (transform.position - attacker.position).normalized;
+
+        // 重置速度
         rb.velocity = Vector2.zero;
 
-        // 击退
-        Vector2 dir = (transform.position - attacker.position).normalized;
-        StartCoroutine(OnHurt(dir));
-
-        // 设置方向
+        // 设置敌人方向
         facingDir = dir.x < 0 ? 1 : -1;
         Flip();
+
+        // 击退
+        StartCoroutine(OnHurt(dir));
+
     }
 
     private IEnumerator OnHurt(Vector2 forceDir)
     {
         rb.AddForce(hurtForce * forceDir, ForceMode2D.Impulse);
-        yield return recoverFromHurt;
 
+        yield return recoverFromHurt;
         isHurt = false;
     }
 
