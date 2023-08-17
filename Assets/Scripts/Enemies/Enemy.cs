@@ -6,31 +6,47 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     protected Rigidbody2D rb;
-    protected Animator animator;
-    PhysicsCheck physicsCheck;
+    [HideInInspector] public Animator animator;
+    [HideInInspector] public PhysicsCheck physicsCheck;
 
     [Header("基本属性")]
     public float walkSpeed;
     public float chaseSpeed;
+    public float currentSpeed;
     public float hurtForce;
 
+    [Header("倒计时")]
     public float waitTime;
     public float waitCounter;
+    public float lostTime;
+    public float lostCounter;
 
     public float recoverFromHurtTime;
     private WaitForSeconds recoverFromHurt;
 
     [Header("状态")]
-    public bool isChase;
     public bool isWait;
+    public bool isChase;
     public bool isHurt;
     public bool isDead;
+
+    [Header("检测")]
+    public Vector2 centerOffset;
+    public Vector2 size;
+    public float distance;
+    public LayerMask playerLayerMask;
+
+
     [Space]
-    public int facingDir;
+    public Vector2 facingDir;
+
+    protected BaseState currentState;
+    protected BaseState patrolState;
+    protected BaseState chaseState;
 
     protected Vector3 originScale;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -39,39 +55,34 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
+        // 初始化默认状态
+        currentState = patrolState;
+        currentState.OnEnter();
+
         originScale = transform.localScale;
 
         // 默认向左
-        facingDir = originScale.x > 0 ? -1 : 1;
+        facingDir = originScale.x > 0 ? new Vector2(-1, 0) : new Vector2(1, 0);
 
         waitCounter = waitTime;
+        lostCounter = lostTime;
 
         recoverFromHurt = new WaitForSeconds(recoverFromHurtTime);
     }
 
     private void Update()
     {
-        ChangeFacingDirection();
+        currentState.LogicUpdate();
+        CountDownTime();
     }
 
-    private void ChangeFacingDirection()
-    {
-        // 撞墙
-        if (physicsCheck.isWall)
-        {
-            // 等待后转身
-            isWait = true;
-            animator.SetBool("isWait", true);
-        }
-
-        CountDownWaitTime();
-    }
 
     /// <summary>
-    /// wait时间计数器
+    /// 时间计数器
     /// </summary>
-    private void CountDownWaitTime()
+    private void CountDownTime()
     {
+        // wait时间计时
         if (isWait)
         {
             waitCounter -= Time.deltaTime;
@@ -96,6 +107,16 @@ public class Enemy : MonoBehaviour
             }
         }
 
+        //chase时间计时
+        if (!FindPlayer() && isChase)
+        {
+            lostCounter -= Time.deltaTime;
+            if (lostCounter <= 0f)
+            {
+                isChase = false;
+                lostCounter = lostTime;
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -107,30 +128,44 @@ public class Enemy : MonoBehaviour
     {
         if (isHurt || isDead)
             return;
-        if (isChase)
-        {
-            SetVelocityX(chaseSpeed);
-        }
-        else if (isWait)
+        if (isWait)
         {
             SetVelocityX(0);
         }
         else
         {
-            SetVelocityX(walkSpeed);
+            SetVelocityX(currentSpeed);
         }
 
         Flip();
     }
 
-    protected void SetVelocityX(float speed)
+
+    public bool FindPlayer()
     {
-        rb.velocity = new Vector2(facingDir * speed, rb.velocity.y);
+        return Physics2D.BoxCast(transform.position + (Vector3)centerOffset, size, 0, facingDir, distance, playerLayerMask);
     }
 
-    protected void Flip()
+    public void SwitchState(EnemyState newState)
     {
-        transform.localScale = new Vector3(facingDir * -1 * originScale.x, originScale.y, originScale.z);
+        currentState.OnExit();
+        currentState = newState switch
+        {
+            EnemyState.patrol => patrolState,
+            EnemyState.chase => chaseState,
+            _ => null,
+        };
+        currentState.OnEnter();
+    }
+
+    protected void SetVelocityX(float speed)
+    {
+        rb.velocity = new Vector2(facingDir.x * speed, rb.velocity.y);
+    }
+
+    public void Flip()
+    {
+        transform.localScale = new Vector3(facingDir.x * -1 * originScale.x, originScale.y, originScale.z);
     }
 
     public void TakeDamage(Transform attacker)
@@ -142,16 +177,18 @@ public class Enemy : MonoBehaviour
         Vector2 dir = (transform.position - attacker.position).normalized;
 
         // 重置速度
-        rb.velocity = Vector2.zero;
+        rb.velocity = new Vector2(0, rb.velocity.y);
 
         // 设置敌人方向
-        facingDir = dir.x < 0 ? 1 : -1;
+        facingDir.x = dir.x < 0 ? 1 : -1;
         Flip();
 
         // 击退
         StartCoroutine(OnHurt(dir));
 
     }
+
+    #region 事件调用方法
 
     private IEnumerator OnHurt(Vector2 forceDir)
     {
@@ -171,5 +208,12 @@ public class Enemy : MonoBehaviour
     public void DestroyAfterDeath()
     {
         Destroy(gameObject);
+    }
+    #endregion
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireCube(transform.position + (Vector3)centerOffset, size);
+        Gizmos.DrawWireCube(transform.position + (Vector3)centerOffset + new Vector3(distance * facingDir.x, 0, 0), size);
     }
 }
